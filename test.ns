@@ -1,0 +1,26 @@
+# a classic two firewall infrastructure
+
+set ns [new Simulator]
+source tb_compat.tcl
+
+set joint [$ns node]
+set internalFirewall [$ns node]
+
+set webserver [$ns node]
+set mailserver [$ns node]
+
+set database [$ns node]
+set clientA [$ns node]
+
+# switches
+set DMZ [$ns make-lan "$joint $internalFirewall $webserver $mailserver" 1000Mb 0ms]
+set internal [$ns make-lan "$internalFirewall $database $clientA" 1000Mb 0ms]
+# joint is joint node
+
+# set the OSes for the nodes
+tb-set-node-os $clientA UBNT-12.04.5-NTP
+
+$ns rtproto Static
+
+# Go!
+$ns run

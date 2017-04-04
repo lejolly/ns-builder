@@ -1,0 +1,33 @@
+group 'sg.jolly'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+task simple(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = "SimpleBuilder"
+    standardInput = System.in
+    if(project.hasProperty('arg')){
+        args(arg.split(','))
+    }
+}
+
+task hierarchical(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = "HierarchicalBuilder"
+    standardInput = System.in
+    if(project.hasProperty('arg')){
+        args(arg.split(','))
+    }
+}
